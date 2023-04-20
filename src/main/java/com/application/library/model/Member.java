@@ -5,19 +5,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Document(collection = "member")
+@Document(collection = "account")
 public class Member extends Account{
 
     //String name;
-    String[] bookIds;
+    List<String> bookIds;
     int numberOfBooksIssued;
 
     public Member(String emailAddress, String password) {
-        this.emailAddress = emailAddress;
-        this.password = password;
+        super(emailAddress,password);
+        bookIds = new ArrayList<>();
+        numberOfBooksIssued = 0;
     }
 
 

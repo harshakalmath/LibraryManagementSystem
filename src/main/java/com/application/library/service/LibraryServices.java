@@ -12,8 +12,12 @@ public class LibraryServices {
     @Autowired
     private AccountRepository accountRepository;
 
-    public void createAccountService(String type, String emailAddress, String password) {
+    public Account createAccountService(String type, String emailAddress, String password) {
+        System.out.println("Create factory with type: "+type);
         Account account = AccountFactory.getAccount(type,emailAddress,password);
-        accountRepository.save(account);
+        System.out.println(account.toString());
+        String id = accountRepository.save(account).getId();
+        return account;
     }
+
 }

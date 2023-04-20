@@ -7,7 +7,7 @@ public class AccountFactory {
         if(accountType.equalsIgnoreCase("librarian"))
             return getNewLibrarian(emailAddress,password);
         else if(accountType.equalsIgnoreCase("member"))
-            return getNewMember(emailAddress,password);
+            return getNewMember(emailAddress, password);
         return null;
     }
 

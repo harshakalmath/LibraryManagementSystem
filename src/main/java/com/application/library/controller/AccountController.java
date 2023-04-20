@@ -5,9 +5,11 @@ import com.application.library.repository.AccountRepository;
 import com.application.library.service.LibraryServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.json.JSONObject;
 
-@RestController("/account")
-public class AccountInfoController {
+@RestController
+@RequestMapping("/account")
+public class AccountController {
 
     @Autowired
     private LibraryServices libraryServices;
@@ -16,11 +18,11 @@ public class AccountInfoController {
     private AccountRepository accountRepository;
 
     @PostMapping("/createAccount")
-    public String createAccount(@RequestBody String emailAddress, String password, String type){
-        // call service class method , make it return an account info object and store that in the mongodb database.
-        //accountRepository.save(accountInfo);
-        libraryServices.createAccountService(type,emailAddress,password);
-        return "Added to database successfully!";
+    public String createAccount(@RequestBody String data1){
+        JSONObject data = new JSONObject(data1);
+        Account account = libraryServices.createAccountService(data.get("type").toString(),data.get("emailAddress").toString(),data.get("password").toString());
+        accountRepository.save(account);
+        return "Added to database successfully with id: ";
     }
 
     @GetMapping("/getAccount")

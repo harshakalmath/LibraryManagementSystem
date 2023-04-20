@@ -1,5 +1,6 @@
 package com.application.library.model;
 
+import com.application.library.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,5 +16,12 @@ public class Account {
     String id;
     String emailAddress;
     String password;
+
+    public Account(String emailAddress, String password) {
+
+        this.emailAddress = emailAddress;
+        this.password = password;
+    }
+
 
 }
