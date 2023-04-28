@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.json.JSONObject;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -25,13 +27,19 @@ public class AccountController {
         return "Added to database successfully with id: ";
     }
 
+    @GetMapping("/getAccounts")
+    public List<Account> getAccounts(){
+        return accountRepository.findAll();
+    }
+
     @GetMapping("/getAccount")
-    public Account getAccount(@RequestBody Integer memberId){
+    public Account getAccount(@RequestBody String memberId){
+
         return accountRepository.findById(memberId).get();
     }
 
     @DeleteMapping("/removeAccount")
-    public String removeAccount(@RequestBody Integer memberId){
+    public String removeAccount(@RequestBody String memberId){
         Account accountInfo = getAccount(memberId);
         accountRepository.delete(accountInfo);
         return "Deleted Successfully";

@@ -13,10 +13,9 @@ public class LibraryServices {
     private AccountRepository accountRepository;
 
     public Account createAccountService(String type, String emailAddress, String password) {
-        System.out.println("Create factory with type: "+type);
         Account account = AccountFactory.getAccount(type,emailAddress,password);
         System.out.println(account.toString());
-        String id = accountRepository.save(account).getId();
+        accountRepository.save(account);
         return account;
     }
 

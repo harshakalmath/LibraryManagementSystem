@@ -17,11 +17,13 @@ public class Member extends Account{
     //String name;
     List<String> bookIds;
     int numberOfBooksIssued;
+    String lendingBehaviour;
 
     public Member(String emailAddress, String password) {
         super(emailAddress,password);
         bookIds = new ArrayList<>();
         numberOfBooksIssued = 0;
+        lendingBehaviour = LibraryHelper.chooseLendingBehaviour();
     }
 
 
