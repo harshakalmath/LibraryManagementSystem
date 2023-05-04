@@ -1,8 +1,6 @@
 package com.application.library.controller;
 
-import com.application.library.model.Account;
-import com.application.library.model.Book;
-import com.application.library.model.Member;
+import com.application.library.model.*;
 import com.application.library.repository.AccountRepository;
 import com.application.library.repository.MemberRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,6 +58,17 @@ public class MemberController {
         List<String> bookIdsPrev = member.getBookIds();
         bookIdsPrev.addAll(bookIds);
         mongoTemplateMember.save(member);
+    }
+
+    @GetMapping("/getFine")
+    public double getFine(@RequestParam String data) {
+        BookLending bookLending;
+        if(data.equalsIgnoreCase(LibraryHelper.monthly))
+            bookLending = new MonthlyLending();
+        else if (data.equalsIgnoreCase(LibraryHelper.biWeekly))
+            bookLending = new BiWeeklyLending();
+        else bookLending = new WeeklyLending();
+        return bookLending.lending();
     }
 
 }

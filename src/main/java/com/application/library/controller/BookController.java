@@ -43,7 +43,7 @@ public class BookController {
         String id = data.getString("_id");
         int numCopies = Integer.valueOf(data.getString("copies"));
         Book book = findBookById(id);
-        book.setNumberOfCopies(numCopies);
+        book.setNumberOfCopies(book.getNumberOfCopies()+numCopies);
         bookRepository.save(book);
         return "Updated copies successfully";
     }

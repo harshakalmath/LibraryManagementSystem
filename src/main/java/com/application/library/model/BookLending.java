@@ -2,5 +2,6 @@ package com.application.library.model;
 
 public interface BookLending {
 
-    double lending(double fine);
+    double fine = 10;
+    double lending();
 }
