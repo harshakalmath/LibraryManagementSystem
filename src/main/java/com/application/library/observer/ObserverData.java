@@ -1,4 +1,6 @@
 package com.application.library.observer;
+/* Implementing observer pattern
+* */
 
 public class ObserverData {
 
