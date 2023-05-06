@@ -6,9 +6,12 @@ public class Tracker implements Observer {
 
     private static Tracker instance = null;
 
+
+    /*Implementing Singleton pattern*/
     public static Tracker getInstance()
     {
         //We have used lazy method to create the singleton object here
+
         if(instance == null)
             instance = new Tracker();
         return instance;
@@ -23,7 +26,7 @@ public class Tracker implements Observer {
     }
 
     /**
-     * Sets and adds staff Earning and FNCD Earning
+     *
      * @param observerData
      */
     @Override
@@ -33,9 +36,7 @@ public class Tracker implements Observer {
         }
     }
 
-    /**
-     * Displays the tracker data - Staff Earning, FNCD Earning
-     */
+
     public void display() {
         System.out.println("Tracker: Day "+ n);
         System.out.println("Number of books Lent:" + numberOfBooksLent);
