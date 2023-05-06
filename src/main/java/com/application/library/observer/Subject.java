@@ -1,5 +1,6 @@
 package com.application.library.observer;
-
+/* Implementing observer pattern
+ * */
 public interface Subject {
     /**
      * Method to register observers
