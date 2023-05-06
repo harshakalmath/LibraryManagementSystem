@@ -20,7 +20,14 @@ public class Book {
     Integer numberOfCopies;
     String genre; // pre-defined list
     String status; // pre-defined list
-    int rackNumber; // auto-generated
+
+    public Book(String name, String author, int numberOfCopies, String genre, String status) {
+        this.name = name;
+        this.author = author;
+        this.numberOfCopies = numberOfCopies;
+        this.genre = genre;
+        this.status = status;
+    }
 
 
 

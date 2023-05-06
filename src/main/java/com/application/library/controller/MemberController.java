@@ -1,6 +1,8 @@
 package com.application.library.controller;
 
+import com.application.library.ObserverHelper;
 import com.application.library.model.*;
+import com.application.library.observer.ObserverData;
 import com.application.library.repository.AccountRepository;
 import com.application.library.repository.MemberRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -17,7 +19,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@RestController("/member")
+@RestController
+@RequestMapping("/member")
 public class MemberController {
 
     @Autowired
@@ -25,6 +28,8 @@ public class MemberController {
 
     @Autowired
     private MongoTemplate mongoTemplateMember;
+
+    ObserverHelper helper = ObserverHelper.getInstance();
 
 
     @DeleteMapping("/removeMember") // remove membership calls this api
@@ -57,6 +62,8 @@ public class MemberController {
         Member member = getMember(id);
         List<String> bookIdsPrev = member.getBookIds();
         bookIdsPrev.addAll(bookIds);
+        ObserverData observerData = helper.createObserverData(bookIds.size());
+        helper.notifyObservers(observerData);
         mongoTemplateMember.save(member);
     }
 
@@ -69,6 +76,22 @@ public class MemberController {
             bookLending = new BiWeeklyLending();
         else bookLending = new WeeklyLending();
         return bookLending.lending();
+    }
+
+    @PostMapping("/removeBooksFromMember")
+    public void removeBooksReturned(@RequestParam String id, @RequestBody String data1) throws JsonProcessingException {
+        System.out.println("inside remove books api");
+        JSONObject data = new JSONObject(data1);
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(data.getJSONArray("bookIds").toString());
+        List<String> bookIds = objectMapper.readValue(data.getJSONArray("bookIds").toString(), List.class);
+        Member member = getMember(id);
+        List<String> bookIdsPrev = member.getBookIds();
+        bookIdsPrev.removeAll(bookIds);
+        ObserverData observerData = helper.createObserverData(bookIds.size());
+        helper.notifyObservers(observerData);
+        mongoTemplateMember.save(member);
+
     }
 
 }
